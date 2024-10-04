@@ -2,11 +2,43 @@ import { useState,useEffect,  } from 'react'
 
 import Header from './components/Header'
 // import Sidebar from './components/Sidebar';
-import Content from './components/Content';
+import { AnimeInfo } from './components/AnimeInfo'
+import { AnimeList } from './components/AnimeList'
 
 import './App.css'
 
+
+// so the Previous fetches work but something about data wouldnt load to the page so going to have re-do the whole layout  and code to something simpler like labs we did in class....
 function App() {
+
+// new more simplified useState variables with initial state value of Berserk cause Berserk  is awesome 
+
+const [search, setSearch] = useState('Berserk')
+const [animeData, SetAnimeData] = useState()
+const [animeInfo, setAnimeInfo] = useState();
+
+  // getting data again with async function and fetch and Jikan link from Docs
+
+  const fetchData = async() => {
+    const res = await fetch(`https://api.jikan.moe/v4/anime?q=${search}&limit=15`)
+    const resData = await res.json();
+    // console.log(resData);  === there for testing now adding teh useSTate variables with it
+    SetAnimeData(resData.data)
+  }
+
+  // now that i have my data again will pass to useEffect again so the data will load when page loads, still need my empty array at start but once my code gets updated in content for search..then fill it in
+
+  useEffect(() => {
+    fetchData()
+  }, [search])
+
+
+
+
+
+
+
+
   // Using UseState hook to for functionality of the app with Search bar and top Hero list
   // const [animeList, SetAnimeList] = useState([]);
   // const [topHeroes, SetTopHeroes] = useState([]);
@@ -136,13 +168,42 @@ function App() {
         
         <div className='content-warp'>
           {/* <Sidebar topHeroes={topHeroes} /> */}
-          {/* <Content 
-            HandleSearch={HandleSearch}
-            search={search}
-            SetSearch={SetSearch}
-            animeList={animeList} /> */}
+          <main>
+          <div className="main-head">
+          <form className='search-box'>
+          <input type="search" placeholder="Look them up!" required 
+                     onChange={(e) => setSearch(e.target.value)}/>   
+
+          </form>
+          </div>
+          <div className='animeInfo'>
+          {animeInfo && <AnimeInfo animeInfo={animeInfo}/>}
+          </div>
+          {/* <AnimeInfo /> */}
+          <div className="anime-row">
+            <h3 className="text-heading">An<strong>I</strong>me</h3>
+            <div className="row">
+                <AnimeList 
+                animelist={animeData}
+                setAnimeInfo={setAnimeInfo}
+                />
+            </div>
+            </div>
+
+          </main>
         </div>
       
+      <div className='container'>
+
+        <div className='animeInfo'>
+
+        </div>
+        <div className='anime-row'>
+          <div className='row'>
+
+          </div>
+        </div>
+      </div>
       </div>
       
     </>
