@@ -1,6 +1,7 @@
 import { useState,useEffect } from 'react'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar';
+import Content from './components/Content';
 
 import './App.css'
 
@@ -21,6 +22,7 @@ function App() {
         
         <div className='content-warp'>
           <Sidebar topHeroes={topHeroes} />
+          <Content />
         </div>
       
       </div>
