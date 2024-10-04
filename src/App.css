@@ -75,6 +75,11 @@ main {
           display: flex;
           justify-content: flex-end;
           flex: 1 1 0%;
+          
+          &:hover {
+            background-color: darkred;
+            
+          }
 
 
           input {
@@ -89,6 +94,10 @@ main {
             border-radius: 999px;
             background-color: beige;
             transition: 0.4s;
+            
+            &:hover {
+                  background-color: steelblue;
+            }
 
               ::placeholder {
                 color: royalblue;
